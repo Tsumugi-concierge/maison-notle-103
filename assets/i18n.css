@@ -1,0 +1,16 @@
+/* Minimal shared styles for language switchers across pages.
+   Intentionally light to avoid overriding page-specific designs. */
+
+.lang-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.lang-btn.active {
+  filter: saturate(1.02);
+}
+
+/* Support both switcher placements already used in pages */
+.lang-switcher, .lang-bar {
+  /* no-op by default; pages define their own layout */
+}
