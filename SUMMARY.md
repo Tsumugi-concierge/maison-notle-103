@@ -36,3 +36,41 @@ Maison Notle 103 — Wi‑Fi 情報の復旧（feat/i18n-6lang）
 補足
 
 - data-i18n の passValue（予約メッセージ案内テキスト）は不要になりましたが、他への影響がないため辞書内の定義は温存しています（最小変更方針）。
+
+---
+
+maison-notle-103: feat/i18n-6lang の main マージ（競合解消込み）記録
+
+- 実施日時: 2026-11-21
+- 作業クローン: maison-notle-103-merge2（本リポジトリ内のみ）
+
+1. マージ概要
+   - 対象: Tsumugi-concierge/maison-notle-103
+   - 操作: main に origin/feat/i18n-6lang を --no-ff でマージ
+   - マージコミット: 8fd5d75
+     - Subject: Merge branch 'feat/i18n-6lang' into main (no-ff)
+
+2. 競合と解消内容
+   - 競合ファイル: index.html（1件）
+   - 解消方針の適用:
+     - 6言語化（言語切替UI・i18nアセット）はブランチ側を正として採用
+       - assets/i18n.js・assets/i18n.css を導入
+       - 既存のページ内 i18n 関数（applyTranslations/setLang の簡易実装）は削除
+     - main 側の内容修正は維持
+       - ホスト連絡文面など main 側の文面を残し、i18n の ready/change イベントで同期
+     - 両立のための最小統合
+       - トースト文言で参照していた currentLang の互換エイリアスを追加（window.currentLang を反映）
+     - Wi-Fi 表示はブランチ側の仕様（パスワード平文＋QR）を採用（オーナー公開可）
+
+3. 秘密情報チェック（鍵・コード類）
+   - 検索実施: 「鍵/キーボックス/暗証/テンキー/ダイヤル」および「code/key box/lockbox/keypad/passcode」周辺の 4〜8 桁数値を走査
+   - 結果: 該当なし（説明文のみで実コードの記載はなし）。Wi‑Fi パスワードのみ意図的に公開。
+
+4. 公開確認（GitHub Pages）
+   - URL: https://tsumugi-concierge.github.io/maison-notle-103/
+   - 確認項目: lang-switcher（.lang-switcher/.lang-btn）の存在、assets/i18n.js の読込
+   - 結果: 反映済みを確認（言語切替UIが表示され、i18n資産が参照されていることを取得HTMLで確認）。
+
+5. 備考
+   - Wi‑Fi 情報（SSID/パスワード/QR）はオーナー承認に基づき公開維持。
+   - 本作業は当クローン内のみで実施し、main に push 済み。
