@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/i18n.css">
     <style>
         :root {
             --cream: #fff8e8;
@@ -296,7 +297,7 @@
                     <span class="wifi-row-val">Maisonnotle103</span>
                     <span class="wifi-row-action" aria-hidden="true">&#x29C9;</span>
                 </button>
-                <button class="wifi-row" onclick="copyWifi(this, '')" aria-label="Copy password">
+                <button class="wifi-row" onclick="copyWifi(this, 'hello.okubo')" aria-label="Copy password">
                     <span class="wifi-row-label" data-i18n="passLabel">Password</span>
                     <span class="wifi-row-val">hello.okubo</span>
                     <span class="wifi-row-action" aria-hidden="true">&#x29C9;</span>
@@ -402,10 +403,11 @@
     </div>
     <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs@master/qrcode.min.js" defer></script>
     <script>
+        // Wi-Fi info (restored from main). Owner-approved to keep password visible.
         const WIFI = { ssid: 'Maisonnotle103', password: 'hello.okubo', type: 'WPA' };
-
-        let currentLang = 'en';
-
+        // Keep a local alias for pages that reference `currentLang` directly.
+        // i18n.js manages window.currentLang; we mirror it here for compatibility.
+        let currentLang = window.currentLang || 'en';
         const HOST_CONTACT = {
             en: 'Please contact your host through the messaging feature on your booking site.',
             ja: 'ご質問は、ご予約サイトのメッセージでホストへご連絡ください。',
@@ -426,7 +428,7 @@
         const UI_STRINGS = {
             en: {
                 headerSub: 'Welcome Guide \u2728 Welcome!', heroLocation: '📍 Room 103, Maison Notle Higashi-Shinjuku, 1-1-35 Okubo, Shinjuku-ku, Tokyo 169-0072, Japan',
-                wifiLabel: 'Wi-Fi', ssidLabel: 'Network', passLabel: 'Password', qrBtn: 'QR', qrHint: 'Scan with your camera to connect',
+                wifiLabel: 'Wi-Fi', ssidLabel: 'Network', passLabel: 'Password', qrBtn: 'QR', qrHint: 'Scan with your camera to connect', passValue: 'Provided in your booking messages', qrUnavailable: 'QR will be available after check-in',
                 catArrive: 'Arriving', catInside: 'Inside the Home', catHelp: 'Help & Neighborhood',
                 btn1: 'Route to Accommodations', btn2: 'By Taxi', btn3: 'How to Open', btn4: 'House Rules',
                 btn5: 'Equipment', btn6: 'Nearby Shops', btn7: 'Parking', btn8: 'Trash',
@@ -436,7 +438,7 @@
             },
             ja: {
                 headerSub: '\u30A6\u30A7\u30EB\u30AB\u30E0\u30AC\u30A4\u30C9 \u2728 \u3088\u3046\u3053\u305D\uFF01', heroLocation: '📍 〒169-0072 東京都新宿区大久保1-1-35 メゾンノトル東新宿103号室',
-                wifiLabel: 'Wi-Fi', ssidLabel: 'SSID', passLabel: '\u30D1\u30B9\u30EF\u30FC\u30C9', qrBtn: 'QR', qrHint: '\u30AB\u30E1\u30E9\u3067\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u63A5\u7D9A',
+                wifiLabel: 'Wi-Fi', ssidLabel: 'SSID', passLabel: '\u30D1\u30B9\u30EF\u30FC\u30C9', qrBtn: 'QR', qrHint: '\u30AB\u30E1\u30E9\u3067\u30B9\u30AD\u30E3\u30F3\u3057\u3066\u63A5\u7D9A', passValue: '\u3054\u4E88\u7D04\u30B5\u30A4\u30C8\u306E\u30E1\u30C3\u30BB\u30FC\u30B8\u3067\u3054\u6848\u5185', qrUnavailable: 'QR\u306F\u30C1\u30A7\u30C3\u30AF\u30A4\u30F3\u5F8C\u306B\u5229\u7528\u53EF\u80FD\u3067\u3059',
                 catArrive: '\u304A\u8D8A\u3057\u306E\u969B\u306B', catInside: '\u5BA4\u5185\u306E\u3054\u6848\u5185', catHelp: '\u30D8\u30EB\u30D7\u30FB\u5468\u8FBA\u60C5\u5831',
                 btn1: '\u5BBF\u6CCA\u65BD\u8A2D\u3078\u306E\u30EB\u30FC\u30C8', btn2: '\u30BF\u30AF\u30B7\u30FC\u3092\u3054\u5229\u7528\u306E\u5834\u5408', btn3: '\u9375\u306E\u958B\u3051\u65B9', btn4: '\u30CF\u30A6\u30B9\u30EB\u30FC\u30EB',
                 btn5: '\u8A2D\u5099\u306B\u3064\u3044\u3066', btn6: '\u8FBA\u306E\u304A\u5E97\u60C5\u5831', btn7: '\u99D0\u8ECA\u5834\u60C5\u5831', btn8: '\u30B4\u30DF\u306E\u51FA\u3057\u65B9',
@@ -446,7 +448,7 @@
             },
             zh: {
                 headerSub: '\u6B22\u8FCE\u6307\u5357 \u2728 \u6B22\u8FCE\u60A8\uFF01', heroLocation: '📍 日本东京都新宿区大久保1-1-35 Maison Notle东新宿103室，邮编169-0072',
-                wifiLabel: 'Wi-Fi', ssidLabel: '\u7F51\u7EDC', passLabel: '\u5BC6\u7801', qrBtn: 'QR', qrHint: '\u7528\u76F8\u673A\u626B\u63CF\u5373\u53EF\u8FDE\u63A5',
+                wifiLabel: 'Wi-Fi', ssidLabel: '\u7F51\u7EDC', passLabel: '\u5BC6\u7801', qrBtn: 'QR', qrHint: '\u7528\u76F8\u673A\u626B\u63CF\u5373\u53EF\u8FDE\u63A5', passValue: '\u8BF7\u67E5\u770B\u9884\u8BA2\u5E73\u53F0\u6D88\u606F', qrUnavailable: '\u626B\u7801\u4E8C\u7EF4\u7801\u4F1A\u5728\u5165\u4F4F\u540E\u63D0\u4F9B',
                 catArrive: '\u5230\u8FBE', catInside: '\u5C4B\u5185\u4FE1\u606F', catHelp: '\u5E2E\u52A9\u4E0E\u5468\u8FB9',
                 btn1: '\u524D\u5F80\u4F4F\u5BBF\u7684\u8DEF\u7EBF', btn2: '\u4E58\u5750\u51FA\u79DF\u8F66', btn3: '\u5982\u4F55\u5F00\u95E8', btn4: '\u623F\u5C4B\u89C4\u5219',
                 btn5: '\u8BBE\u65BD\u8BF4\u660E', btn6: '\u9644\u8FD1\u5546\u5E97', btn7: '\u505C\u8F66\u573A\u4FE1\u606F', btn8: '\u5783\u573E\u5904\u7406\u65B9\u6CD5',
@@ -456,7 +458,7 @@
             },
             ko: {
                 headerSub: '\uD658\uC601 \uAC00\uC774\uB4DC \u2728 \uD658\uC601\uD569\uB2C8\uB2E4!', heroLocation: '📍 일본 도쿄도 신주쿠구 오쿠보 1-1-35 메종 노틀 히가시신주쿠 103호 (169-0072)',
-                wifiLabel: 'Wi-Fi', ssidLabel: '\uB124\uD2B8\uC6CC\uD06C', passLabel: '\uBE44\uBC00\uBC88\uD638', qrBtn: 'QR', qrHint: '\uCE74\uBA54\uB77C\uB85C \uC2A4\uCE94\uD558\uC5EC \uC5F0\uACB0',
+                wifiLabel: 'Wi-Fi', ssidLabel: '\uB124\uD2B8\uC6CC\uD06C', passLabel: '\uBE44\uBC00\uBC88\uD638', qrBtn: 'QR', qrHint: '\uCE74\uBA54\uB77C\uB85C \uC2A4\uCE94\uD558\uC5EC \uC5F0\uACB0', passValue: '\uC608\uC57D \uD398\uC774\uC9C0 \uBA54\uC2DC\uC9C0\uB97C \uD655\uC778\uD558\uC138\uC694', qrUnavailable: 'QR\uB294 \uCCB4\uD06C\uC778 \uD6C4 \uC81C\uACF5\uB429\uB2C8\uB2E4',
                 catArrive: '\uB3C4\uCC29 \uC548\uB0B4', catInside: '\uC2E4\uB0B4 \uC548\uB0B4', catHelp: '\uB3C4\uC6C0\uB9D0 & \uC8FC\uBCC0',
                 btn1: '\uC219\uC18C\uAE4C\uC9C0 \uAC00\uB294 \uAE38', btn2: '\uD0DD\uC2DC \uC774\uC6A9 \uBC29\uBC95', btn3: '\uBB38 \uC5EC\uB294 \uBC29\uBC95', btn4: '\uD558\uC6B0\uC2A4 \uADDC\uCE59',
                 btn5: '\uC2DC\uC124 \uC548\uB0B4', btn6: '\uADFC\uCC98 \uC0C1\uC810', btn7: '\uC8FC\uCC28\uC7A5 \uC548\uB0B4', btn8: '\uC4F0\uB808\uAE30 \uBC84\uB9AC\uB294 \uBC29\uBC95',
@@ -466,7 +468,7 @@
             },
             fr: {
                 headerSub: 'Guide de bienvenue \u2728 Bienvenue !', heroLocation: '📍 Chambre 103, Maison Notle Higashi-Shinjuku, 1-1-35 Okubo, Shinjuku-ku, Tokyo 169-0072, Japon',
-                wifiLabel: 'Wi-Fi', ssidLabel: 'R\u00E9seau', passLabel: 'Mot de passe', qrBtn: 'QR', qrHint: 'Scannez avec votre cam\u00E9ra pour vous connecter',
+                wifiLabel: 'Wi-Fi', ssidLabel: 'R\u00E9seau', passLabel: 'Mot de passe', qrBtn: 'QR', qrHint: 'Scannez avec votre cam\u00E9ra pour vous connecter', passValue: 'Indiqu\u00E9 dans vos messages de r\u00E9servation', qrUnavailable: 'Le QR sera disponible apr\u00E8s l\'enregistrement',
                 catArrive: 'Arriv\u00E9e', catInside: 'Dans le logement', catHelp: 'Aide & Quartier',
                 btn1: 'Itin\u00E9raire vers l\'h\u00E9bergement', btn2: 'En taxi', btn3: 'Comment ouvrir la porte', btn4: 'R\u00E8glement int\u00E9rieur',
                 btn5: '\u00C9quipements', btn6: 'Commerces \u00E0 proximit\u00E9', btn7: 'Parking', btn8: 'Collecte des ordures',
@@ -476,7 +478,7 @@
             },
             es: {
                 headerSub: 'Gu\u00EDa de bienvenida \u2728 \u00A1Bienvenido/a!', heroLocation: '📍 Habitación 103, Maison Notle Higashi-Shinjuku, 1-1-35 Okubo, Shinjuku-ku, Tokio 169-0072, Japón',
-                wifiLabel: 'Wi-Fi', ssidLabel: 'Red', passLabel: 'Contrase\u00F1a', qrBtn: 'QR', qrHint: 'Escanea con tu c\u00E1mara para conectar',
+                wifiLabel: 'Wi-Fi', ssidLabel: 'Red', passLabel: 'Contrase\u00F1a', qrBtn: 'QR', qrHint: 'Escanea con tu c\u00E1mara para conectar', passValue: 'Indicado en los mensajes de tu reserva', qrUnavailable: 'El QR estar\u00E1 disponible despu\u00E9s del check-in',
                 catArrive: 'Al llegar', catInside: 'Dentro del alojamiento', catHelp: 'Ayuda y barrio',
                 btn1: 'Ruta al alojamiento', btn2: 'En taxi', btn3: 'C\u00F3mo abrir la puerta', btn4: 'Normas de la casa',
                 btn5: 'Equipamiento', btn6: 'Tiendas cercanas', btn7: 'Aparcamiento', btn8: 'Gesti\u00F3n de residuos',
@@ -486,23 +488,19 @@
             },
         };
 
-        function applyTranslations(lang) {
-            const t = UI_STRINGS[lang];
-            if (!t) return;
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (key in t) el.textContent = t[key];
-            });
-        }
-
-        function setLang(lang, btn) {
-            currentLang = lang;
-            document.getElementById('hostContact').textContent = HOST_CONTACT[lang];
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            applyTranslations(lang);
-            document.documentElement.lang = lang;
-        }
+        // Sync host contact text to global language events (handled by assets/i18n.js)
+        document.addEventListener('i18n:ready', (e) => {
+            const l = (e.detail && e.detail.lang) || 'en';
+            currentLang = l;
+            const el = document.getElementById('hostContact');
+            if (el && HOST_CONTACT[l]) el.textContent = HOST_CONTACT[l];
+        });
+        document.addEventListener('i18n:change', (e) => {
+            const l = (e.detail && e.detail.lang) || 'en';
+            currentLang = l;
+            const el = document.getElementById('hostContact');
+            if (el && HOST_CONTACT[l]) el.textContent = HOST_CONTACT[l];
+        });
 
         async function copyWifi(btn, text) {
             try { await navigator.clipboard.writeText(text); } catch {
@@ -529,6 +527,13 @@
         function toggleQR() {
             const panel = document.getElementById('wifiQr');
             const btn = document.getElementById('qrToggle');
+            // If password is not available, do not render QR
+            if (!WIFI.password) {
+                const l = (window.currentLang || 'en');
+                const t = (UI_STRINGS[l] && UI_STRINGS[l].qrUnavailable) || 'QR will be available after check-in';
+                showToast(t);
+                return;
+            }
             const open = !panel.classList.contains('visible');
             panel.classList.toggle('visible', open);
             btn.setAttribute('aria-expanded', String(open));
@@ -560,8 +565,9 @@
             qrRendered = true;
         }
 
-        applyTranslations('en');
+        // i18n bootstrapped by assets/i18n.js
     </script>
+    <script src="assets/i18n.js" defer></script>
   <script src="assets/cute-pack.js" defer></script>
 </body>
 </html>

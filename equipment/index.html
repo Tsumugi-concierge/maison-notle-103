@@ -6,6 +6,7 @@
 <title>Equipment - Maison Notle 103</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/cute-pack.css">
+<link rel="stylesheet" href="../assets/i18n.css">
 <style>
 :root{--accent:#d7bd55;--accent-dark:#a8872e;--accent-light:#f7df7c;--cream:#fff8e8;--text-dark:#4a3b16;--text-mid:#745f28;}
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -37,7 +38,8 @@ body{font-family:'Nunito',sans-serif;background:var(--cream);color:var(--text-da
   <button class="lang-btn" data-lang="ko">KO</button>
   <button class="lang-btn" data-lang="fr">FR</button>
   <button class="lang-btn" data-lang="es">ES</button>
-</div>
+  <!-- Buttons use data-lang; shared i18n.js will bind clicks and persist language -->
+  </div>
 <div class="top-bar">
   <a class="back-btn" href="../">&larr;</a>
   <div class="top-title">Equipment</div>
@@ -71,14 +73,10 @@ function renderSections() {
   `).join('');
   document.getElementById('back-link').innerHTML = STRINGS[currentLang].back;
 }
-document.querySelectorAll('.lang-btn').forEach((button) => {
-  button.addEventListener('click', () => {
-    currentLang = button.dataset.lang;
-    document.querySelectorAll('.lang-btn').forEach((btn) => btn.classList.toggle('active', btn === button));
-    renderSections();
-  });
-});
-renderSections();
+// Re-render when global language is resolved or changed
+document.addEventListener('i18n:ready', (e) => { currentLang = e.detail.lang; renderSections(); });
+document.addEventListener('i18n:change', (e) => { currentLang = e.detail.lang; renderSections(); });
 </script>
+<script src="../assets/i18n.js" defer></script>
 </body>
 </html>
